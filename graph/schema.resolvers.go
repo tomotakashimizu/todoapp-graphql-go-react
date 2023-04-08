@@ -6,29 +6,40 @@ package graph
 
 import (
 	"context"
-	"crypto/rand"
-	"fmt"
-	"math/big"
+	"log"
 
+	"github.com/google/uuid"
 	"github.com/tomotakashimizu/todoapp-graphql-go-react/graph/model"
+	"github.com/tomotakashimizu/todoapp-graphql-go-react/infrastructure"
 )
 
 // CreateTodo is the resolver for the createTodo field.
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	rand, _ := rand.Int(rand.Reader, big.NewInt(100))
-	todo := &model.Todo{
+func (r *mutationResolver) CreateTodo(ctx context.Context, input model.InputTodo) (bool, error) {
+	newUUID, err := uuid.NewRandom()
+	if err != nil {
+		log.Printf("Error generating UUID: %v\n", err)
+		return false, err
+	}
+	todo := &infrastructure.Todo{
+		ID:     newUUID.String(),
 		Text:   input.Text,
-		ID:     fmt.Sprintf("T%d", rand),
-		User:   &model.User{ID: input.UserID, Name: "user " + input.UserID},
 		UserID: input.UserID,
 	}
-	r.todos = append(r.todos, todo)
-	return todo, nil
+
+	_, err = r.DB.Insert(todo)
+	if err != nil {
+		log.Printf("Error insert todo: %v\n", err)
+		return false, err
+	}
+
+	return true, nil
 }
 
 // Todos is the resolver for the todos field.
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	return r.todos, nil
+	var todos []*infrastructure.Todo
+	r.DB.AllCols().Find(&todos)
+	return model.NewTodos(todos), nil
 }
 
 // User is the resolver for the user field.
