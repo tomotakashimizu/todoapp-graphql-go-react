@@ -2,6 +2,10 @@
 
 package model
 
+type CreateTodoInput struct {
+	Text string `json:"text"`
+}
+
 type Todo struct {
 	ID     string `json:"id"`
 	Text   string `json:"text"`
@@ -10,7 +14,8 @@ type Todo struct {
 	User   *User  `json:"user"`
 }
 
-type TodoInput struct {
+type UpdateTodoInput struct {
+	ID   string `json:"id"`
 	Text string `json:"text"`
 	Done bool   `json:"done"`
 }

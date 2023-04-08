@@ -15,7 +15,7 @@ import (
 )
 
 // CreateTodo is the resolver for the createTodo field.
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.TodoInput) (bool, error) {
+func (r *mutationResolver) CreateTodo(ctx context.Context, input model.CreateTodoInput) (bool, error) {
 	newUUID, err := uuid.NewRandom()
 	if err != nil {
 		log.Printf("Error generating UUID: %v\n", err)
@@ -38,7 +38,7 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.TodoInput
 }
 
 // UpdateTodo is the resolver for the updateTodo field.
-func (r *mutationResolver) UpdateTodo(ctx context.Context, input model.TodoInput) (bool, error) {
+func (r *mutationResolver) UpdateTodo(ctx context.Context, input model.UpdateTodoInput) (bool, error) {
 	panic(fmt.Errorf("not implemented: UpdateTodo - updateTodo"))
 }
 
