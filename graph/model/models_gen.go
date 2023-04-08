@@ -2,7 +2,7 @@
 
 package model
 
-type NewTodo struct {
+type InputTodo struct {
 	Text   string `json:"text"`
 	UserID string `json:"userId"`
 }
