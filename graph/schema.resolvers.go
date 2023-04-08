@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/google/uuid"
@@ -14,16 +15,17 @@ import (
 )
 
 // CreateTodo is the resolver for the createTodo field.
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.InputTodo) (bool, error) {
+func (r *mutationResolver) CreateTodo(ctx context.Context, input model.TodoInput) (bool, error) {
 	newUUID, err := uuid.NewRandom()
 	if err != nil {
 		log.Printf("Error generating UUID: %v\n", err)
 		return false, err
 	}
 	todo := &infrastructure.Todo{
-		ID:     newUUID.String(),
-		Text:   input.Text,
-		UserID: input.UserID,
+		ID:   newUUID.String(),
+		Text: input.Text,
+		// TODO: ログインしているユーザのIDにする
+		UserID: "550e8400-e29b-41d4-a716-446655440000",
 	}
 
 	_, err = r.DB.Insert(todo)
@@ -33,6 +35,11 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.InputTodo
 	}
 
 	return true, nil
+}
+
+// UpdateTodo is the resolver for the updateTodo field.
+func (r *mutationResolver) UpdateTodo(ctx context.Context, input model.TodoInput) (bool, error) {
+	panic(fmt.Errorf("not implemented: UpdateTodo - updateTodo"))
 }
 
 // Todos is the resolver for the todos field.

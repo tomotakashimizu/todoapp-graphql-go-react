@@ -2,17 +2,17 @@
 
 package model
 
-type InputTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
-}
-
 type Todo struct {
 	ID     string `json:"id"`
 	Text   string `json:"text"`
 	Done   bool   `json:"done"`
 	UserID string `json:"userId"`
 	User   *User  `json:"user"`
+}
+
+type TodoInput struct {
+	Text string `json:"text"`
+	Done bool   `json:"done"`
 }
 
 type User struct {

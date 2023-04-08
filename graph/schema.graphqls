@@ -19,11 +19,12 @@ type Query {
   todos: [Todo!]!
 }
 
-input InputTodo {
+input TodoInput {
   text: String!
-  userId: String!
+  done: Boolean!
 }
 
 type Mutation {
-  createTodo(input: InputTodo!): Boolean!
+  createTodo(input: TodoInput!): Boolean!
+  updateTodo(input: TodoInput!): Boolean!
 }
