@@ -32,4 +32,5 @@ input UpdateTodoInput {
 type Mutation {
   createTodo(input: CreateTodoInput!): Boolean!
   updateTodo(input: UpdateTodoInput!): Boolean!
+  deleteTodo(todoId: ID!): Boolean!
 }

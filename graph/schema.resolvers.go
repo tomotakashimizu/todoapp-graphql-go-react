@@ -50,6 +50,16 @@ func (r *mutationResolver) UpdateTodo(ctx context.Context, input model.UpdateTod
 	return true, nil
 }
 
+// DeleteTodo is the resolver for the deleteTodo field.
+func (r *mutationResolver) DeleteTodo(ctx context.Context, todoID string) (bool, error) {
+	_, err := r.DB.ID(todoID).Delete(&infrastructure.Todo{})
+	if err != nil {
+		log.Printf("Error delete todo: %v\n", err)
+		return false, err
+	}
+	return true, nil
+}
+
 // Todos is the resolver for the todos field.
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 	var todos []*infrastructure.Todo

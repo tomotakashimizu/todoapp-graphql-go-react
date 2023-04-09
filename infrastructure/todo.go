@@ -9,6 +9,7 @@ type Todo struct {
 	UserID    string    `xorm:"'user_id'"`
 	CreatedAt time.Time `xorm:"created TIMESTAMPZ"`
 	UpdatedAt time.Time `xorm:"updated TIMESTAMPZ"`
+	DeletedAt time.Time `xorm:"deleted TIMESTAMPZ"`
 }
 
 func (t Todo) TableName() string {
