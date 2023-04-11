@@ -1,6 +1,6 @@
 package model
 
-import "github.com/tomotakashimizu/todoapp-graphql-go-react/infrastructure"
+import "github.com/tomotakashimizu/todoapp-graphql-go-react/app/infrastructure"
 
 func NewTodos(todos []*infrastructure.Todo) []*Todo {
 	data := make([]*Todo, len(todos))
