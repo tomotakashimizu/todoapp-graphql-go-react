@@ -1,9 +1,9 @@
-module github.com/tomotakashimizu/todoapp-graphql-go-react
+module github.com/tomotakashimizu/todoapp-graphql-go-react/app
 
 go 1.20
 
 require (
-	github.com/99designs/gqlgen v0.17.27
+	github.com/99designs/gqlgen v0.17.29
 	github.com/google/uuid v1.3.0
 	github.com/lib/pq v1.10.7
 	github.com/vektah/gqlparser/v2 v2.5.1
