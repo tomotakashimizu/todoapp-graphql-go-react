@@ -1,31 +1,40 @@
+# Define the schema and document sources
 schema:
   - ../*.graphqls
 
 documents:
   - ./graphql/mutation/*.graphql
   - ./graphql/query/*.graphql
+
+# Configure the generated output and plugins
 generates:
+  # Generate schema in AST format
   graphql/schema.graphql:
     plugins:
       - schema-ast
+
+  # Generate fragment matcher for possible types
   src/types/gen/possibleTypes-result.ts:
     plugins:
       - fragment-matcher
     config:
       apolloClientVersion: 3
+
+  # Generate TypeScript types, operations, and React hooks
   src/types/gen/api.ts:
     plugins:
       - typescript
       - typescript-operations
       - typescript-react-apollo
     config:
-      withHooks: true
       withComponent: false
+      withHooks: true
 
+# Configure global settings
 config:
+  gqlImport: "@apollo/client#gql"
   scalars:
     Date: string
+    NumberID: number
     Time: string
     Version: number
-    NumberID: number
-  gqlImport: "@apollo/client#gql"
