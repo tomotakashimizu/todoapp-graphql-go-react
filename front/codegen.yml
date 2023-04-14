@@ -1,0 +1,28 @@
+schema:
+  - ../*.graphqls
+
+documents:
+  - ./graphql/mutation/*.graphql
+  - ./graphql/query/*.graphql
+generates:
+  graphql/schema.graphql:
+    plugins:
+      - schema-ast
+  src/types/gen/possibleTypes-result.ts:
+    plugins:
+      - fragment-matcher
+    config:
+      apolloClientVersion: 3
+  src/types/gen/api.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+
+config:
+  scalars:
+    Date: string
+    Time: string
+    Version: number
+    NumberID: number
+  gqlImport: "@apollo/client#gql"
