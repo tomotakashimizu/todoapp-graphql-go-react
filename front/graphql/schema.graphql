@@ -1,0 +1,32 @@
+input CreateTodoInput {
+  text: String!
+}
+
+type Mutation {
+  createTodo(input: CreateTodoInput!): Boolean!
+  deleteTodo(todoId: ID!): Boolean!
+  updateTodo(input: UpdateTodoInput!): Boolean!
+}
+
+type Query {
+  todos: [Todo!]!
+}
+
+type Todo {
+  done: Boolean!
+  id: ID!
+  text: String!
+  user: User!
+  userId: String!
+}
+
+input UpdateTodoInput {
+  done: Boolean!
+  id: ID!
+  text: String!
+}
+
+type User {
+  id: ID!
+  name: String!
+}
