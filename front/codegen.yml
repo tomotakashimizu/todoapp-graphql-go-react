@@ -32,7 +32,7 @@ generates:
 
 # Configure global settings
 config:
-  gqlImport: "@apollo/client#gql"
+  gqlImport: '@apollo/client#gql'
   scalars:
     Date: string
     NumberID: number
