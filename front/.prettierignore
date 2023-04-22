@@ -1,0 +1,11 @@
+# Ignore artifacts:
+build/
+coverage/
+
+node_modules/
+*.log
+**.*.log
+**/*.graphql
+**/gen/*.ts
+dist/
+package-lock.json
