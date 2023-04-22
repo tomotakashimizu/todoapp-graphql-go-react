@@ -6,6 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.17.29
 	github.com/google/uuid v1.3.0
 	github.com/lib/pq v1.10.7
+	github.com/rs/cors v1.9.0
 	github.com/vektah/gqlparser/v2 v2.5.1
 	xorm.io/xorm v1.3.2
 )
