@@ -8,10 +8,13 @@ export const TodoList: React.FC = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <ul>
-      {data?.todos.map((todo) => (
-        <li key={todo.id}>{todo.text}</li>
-      ))}
-    </ul>
+    <div>
+      <h2>Todoリスト</h2>
+      <ul>
+        {data?.todos.map((todo) => (
+          <li key={todo.id}>{todo.text}</li>
+        ))}
+      </ul>
+    </div>
   );
 };
