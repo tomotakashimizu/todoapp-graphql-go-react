@@ -21,7 +21,7 @@ export type CreateTodoInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createTodo: Scalars['Boolean'];
+  createTodo: Todo;
   deleteTodo: Scalars['Boolean'];
   updateTodo: Scalars['Boolean'];
 };
@@ -72,7 +72,7 @@ export type CreateTodoMutationVariables = Exact<{
 }>;
 
 
-export type CreateTodoMutation = { __typename?: 'Mutation', createTodo: boolean };
+export type CreateTodoMutation = { __typename?: 'Mutation', createTodo: { __typename?: 'Todo', id: string, text: string, done: boolean, user: { __typename?: 'User', id: string, name: string } } };
 
 export type GetAllTodosQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -82,7 +82,15 @@ export type GetAllTodosQuery = { __typename?: 'Query', todos: Array<{ __typename
 
 export const CreateTodoDocument = gql`
     mutation CreateTodo($input: CreateTodoInput!) {
-  createTodo(input: $input)
+  createTodo(input: $input) {
+    id
+    text
+    done
+    user {
+      id
+      name
+    }
+  }
 }
     `;
 export type CreateTodoMutationFn = Apollo.MutationFunction<CreateTodoMutation, CreateTodoMutationVariables>;

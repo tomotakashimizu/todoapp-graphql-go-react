@@ -14,11 +14,11 @@ import (
 )
 
 // CreateTodo is the resolver for the createTodo field.
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.CreateTodoInput) (bool, error) {
+func (r *mutationResolver) CreateTodo(ctx context.Context, input model.CreateTodoInput) (*model.Todo, error) {
 	newUUID, err := uuid.NewRandom()
 	if err != nil {
 		log.Printf("Error generating UUID: %v\n", err)
-		return false, err
+		return nil, err
 	}
 	todo := &infrastructure.Todo{
 		ID:   newUUID.String(),
@@ -30,10 +30,10 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.CreateTod
 	_, err = r.DB.Insert(todo)
 	if err != nil {
 		log.Printf("Error insert todo: %v\n", err)
-		return false, err
+		return nil, err
 	}
 
-	return true, nil
+	return model.NewTodo(todo), nil
 }
 
 // UpdateTodo is the resolver for the updateTodo field.

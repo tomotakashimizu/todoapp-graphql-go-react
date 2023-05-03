@@ -1,3 +1,11 @@
 mutation CreateTodo($input: CreateTodoInput!) {
-  createTodo(input: $input)
+  createTodo(input: $input) {
+    id
+    text
+    done
+    user {
+      id
+      name
+    }
+  }
 }
