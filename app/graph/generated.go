@@ -70,7 +70,7 @@ type ComplexityRoot struct {
 }
 
 type MutationResolver interface {
-	CreateTodo(ctx context.Context, input model.CreateTodoInput) (bool, error)
+	CreateTodo(ctx context.Context, input model.CreateTodoInput) (*model.Todo, error)
 	UpdateTodo(ctx context.Context, input model.UpdateTodoInput) (bool, error)
 	DeleteTodo(ctx context.Context, todoID string) (bool, error)
 }
@@ -290,7 +290,7 @@ input UpdateTodoInput {
 }
 
 type Mutation {
-  createTodo(input: CreateTodoInput!): Boolean!
+  createTodo(input: CreateTodoInput!): Todo!
   updateTodo(input: UpdateTodoInput!): Boolean!
   deleteTodo(todoId: ID!): Boolean!
 }
@@ -426,9 +426,9 @@ func (ec *executionContext) _Mutation_createTodo(ctx context.Context, field grap
 		}
 		return graphql.Null
 	}
-	res := resTmp.(bool)
+	res := resTmp.(*model.Todo)
 	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+	return ec.marshalNTodo2ᚖgithubᚗcomᚋtomotakashimizuᚋtodoappᚑgraphqlᚑgoᚑreactᚋappᚋgraphᚋmodelᚐTodo(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createTodo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -438,7 +438,19 @@ func (ec *executionContext) fieldContext_Mutation_createTodo(ctx context.Context
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_Todo_id(ctx, field)
+			case "text":
+				return ec.fieldContext_Todo_text(ctx, field)
+			case "done":
+				return ec.fieldContext_Todo_done(ctx, field)
+			case "userId":
+				return ec.fieldContext_Todo_userId(ctx, field)
+			case "user":
+				return ec.fieldContext_Todo_user(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Todo", field.Name)
 		},
 	}
 	defer func() {
@@ -3509,6 +3521,10 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) marshalNTodo2githubᚗcomᚋtomotakashimizuᚋtodoappᚑgraphqlᚑgoᚑreactᚋappᚋgraphᚋmodelᚐTodo(ctx context.Context, sel ast.SelectionSet, v model.Todo) graphql.Marshaler {
+	return ec._Todo(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNTodo2ᚕᚖgithubᚗcomᚋtomotakashimizuᚋtodoappᚑgraphqlᚑgoᚑreactᚋappᚋgraphᚋmodelᚐTodoᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Todo) graphql.Marshaler {

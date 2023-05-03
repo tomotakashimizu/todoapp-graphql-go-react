@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { CreateTodoDocument } from '../types/gen/api';
+import { CreateTodoDocument, GetAllTodosDocument, GetAllTodosQuery } from '../types/gen/api';
 
 function CreateTodoForm() {
   const [text, setText] = useState('');
-  const [createTodo] = useMutation(CreateTodoDocument);
+  const [createTodo] = useMutation(CreateTodoDocument, {
+    // キャッシュを更新し、そのキャッシュを参照しているすべてのコンポーネントに通知し、新しいデータをもとに再レンダリング=>UIが自動的に更新
+    update(cache, { data: { createTodo } }) {
+      const existingTodos = cache.readQuery<GetAllTodosQuery>({ query: GetAllTodosDocument });
+
+      if (existingTodos && createTodo) {
+        cache.writeQuery({
+          query: GetAllTodosDocument,
+          data: { todos: [...existingTodos.todos, createTodo] },
+        });
+      }
+    },
+  });
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
