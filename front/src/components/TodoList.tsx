@@ -3,12 +3,13 @@ import { DeleteTodoDocument, useGetAllTodosQuery } from '../types/gen/api';
 import { useMutation } from '@apollo/client';
 
 export const TodoList: React.FC = () => {
-  const { data, loading, error } = useGetAllTodosQuery();
+  const { data, loading, error, refetch } = useGetAllTodosQuery();
   const [deleteTodo] = useMutation(DeleteTodoDocument);
 
   const handleDeleteTodo = async (todoId: string) => {
     try {
       await deleteTodo({ variables: { todoId } });
+      refetch();
     } catch (error) {
       console.error('Error deleting todo: ', error);
     }
