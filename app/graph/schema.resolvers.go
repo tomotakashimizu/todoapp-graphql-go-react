@@ -37,12 +37,12 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.CreateTod
 }
 
 // UpdateTodo is the resolver for the updateTodo field.
-func (r *mutationResolver) UpdateTodo(ctx context.Context, input model.UpdateTodoInput) (bool, error) {
+func (r *mutationResolver) UpdateTodo(ctx context.Context, todoID string, input model.UpdateTodoInput) (bool, error) {
 	todo := &infrastructure.Todo{
 		Text: input.Text,
 		Done: input.Done,
 	}
-	_, err := r.DB.ID(input.ID).Cols("text", "done").Update(todo)
+	_, err := r.DB.ID(todoID).Cols("text", "done").Update(todo)
 	if err != nil {
 		log.Printf("Error update todo: %v\n", err)
 		return false, err

@@ -24,13 +24,12 @@ input CreateTodoInput {
 }
 
 input UpdateTodoInput {
-  id: ID!
   text: String!
   done: Boolean!
 }
 
 type Mutation {
   createTodo(input: CreateTodoInput!): Todo!
-  updateTodo(input: UpdateTodoInput!): Boolean!
+  updateTodo(todoId: ID!, input: UpdateTodoInput!): Boolean!
   deleteTodo(todoId: ID!): Boolean!
 }

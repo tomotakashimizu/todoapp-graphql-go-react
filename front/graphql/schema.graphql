@@ -5,7 +5,7 @@ input CreateTodoInput {
 type Mutation {
   createTodo(input: CreateTodoInput!): Todo!
   deleteTodo(todoId: ID!): Boolean!
-  updateTodo(input: UpdateTodoInput!): Boolean!
+  updateTodo(input: UpdateTodoInput!, todoId: ID!): Boolean!
 }
 
 type Query {
@@ -22,7 +22,6 @@ type Todo {
 
 input UpdateTodoInput {
   done: Boolean!
-  id: ID!
   text: String!
 }
 

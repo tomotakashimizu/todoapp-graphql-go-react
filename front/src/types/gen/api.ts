@@ -39,6 +39,7 @@ export type MutationDeleteTodoArgs = {
 
 export type MutationUpdateTodoArgs = {
   input: UpdateTodoInput;
+  todoId: Scalars['ID'];
 };
 
 export type Query = {
@@ -57,7 +58,6 @@ export type Todo = {
 
 export type UpdateTodoInput = {
   done: Scalars['Boolean'];
-  id: Scalars['ID'];
   text: Scalars['String'];
 };
 
