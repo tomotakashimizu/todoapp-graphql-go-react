@@ -1,0 +1,3 @@
+mutation UpdateTodoStatus($todoId: ID!, $done: Boolean!) {
+  updateTodoStatus(todoId: $todoId, done: $done)
+}
