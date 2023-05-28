@@ -1,5 +1,5 @@
-mutation CreateTodo($input: CreateTodoInput!) {
-  createTodo(input: $input) {
+mutation CreateTodo($todo: CreateTodoInput!) {
+  createTodo(todo: $todo) {
     id
     text
     done
