@@ -28,7 +28,7 @@ export type Mutation = {
 
 
 export type MutationCreateTodoArgs = {
-  input: CreateTodoInput;
+  todo: CreateTodoInput;
 };
 
 
@@ -38,7 +38,7 @@ export type MutationDeleteTodoArgs = {
 
 
 export type MutationUpdateTodoArgs = {
-  input: UpdateTodoInput;
+  todo: UpdateTodoInput;
   todoId: Scalars['ID'];
 };
 
@@ -68,7 +68,7 @@ export type User = {
 };
 
 export type CreateTodoMutationVariables = Exact<{
-  input: CreateTodoInput;
+  todo: CreateTodoInput;
 }>;
 
 
@@ -88,8 +88,8 @@ export type GetAllTodosQuery = { __typename?: 'Query', todos: Array<{ __typename
 
 
 export const CreateTodoDocument = gql`
-    mutation CreateTodo($input: CreateTodoInput!) {
-  createTodo(input: $input) {
+    mutation CreateTodo($todo: CreateTodoInput!) {
+  createTodo(todo: $todo) {
     id
     text
     done
@@ -115,7 +115,7 @@ export type CreateTodoMutationFn = Apollo.MutationFunction<CreateTodoMutation, C
  * @example
  * const [createTodoMutation, { data, loading, error }] = useCreateTodoMutation({
  *   variables: {
- *      input: // value for 'input'
+ *      todo: // value for 'todo'
  *   },
  * });
  */

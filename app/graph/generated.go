@@ -46,9 +46,9 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	Mutation struct {
-		CreateTodo func(childComplexity int, input model.CreateTodoInput) int
+		CreateTodo func(childComplexity int, todo model.CreateTodoInput) int
 		DeleteTodo func(childComplexity int, todoID string) int
-		UpdateTodo func(childComplexity int, todoID string, input model.UpdateTodoInput) int
+		UpdateTodo func(childComplexity int, todoID string, todo model.UpdateTodoInput) int
 	}
 
 	Query struct {
@@ -70,8 +70,8 @@ type ComplexityRoot struct {
 }
 
 type MutationResolver interface {
-	CreateTodo(ctx context.Context, input model.CreateTodoInput) (*model.Todo, error)
-	UpdateTodo(ctx context.Context, todoID string, input model.UpdateTodoInput) (bool, error)
+	CreateTodo(ctx context.Context, todo model.CreateTodoInput) (*model.Todo, error)
+	UpdateTodo(ctx context.Context, todoID string, todo model.UpdateTodoInput) (bool, error)
 	DeleteTodo(ctx context.Context, todoID string) (bool, error)
 }
 type QueryResolver interface {
@@ -106,7 +106,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreateTodo(childComplexity, args["input"].(model.CreateTodoInput)), true
+		return e.complexity.Mutation.CreateTodo(childComplexity, args["todo"].(model.CreateTodoInput)), true
 
 	case "Mutation.deleteTodo":
 		if e.complexity.Mutation.DeleteTodo == nil {
@@ -130,7 +130,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdateTodo(childComplexity, args["todoId"].(string), args["input"].(model.UpdateTodoInput)), true
+		return e.complexity.Mutation.UpdateTodo(childComplexity, args["todoId"].(string), args["todo"].(model.UpdateTodoInput)), true
 
 	case "Query.todos":
 		if e.complexity.Query.Todos == nil {
@@ -289,8 +289,8 @@ input UpdateTodoInput {
 }
 
 type Mutation {
-  createTodo(input: CreateTodoInput!): Todo!
-  updateTodo(todoId: ID!, input: UpdateTodoInput!): Boolean!
+  createTodo(todo: CreateTodoInput!): Todo!
+  updateTodo(todoId: ID!, todo: UpdateTodoInput!): Boolean!
   deleteTodo(todoId: ID!): Boolean!
 }
 `, BuiltIn: false},
@@ -305,14 +305,14 @@ func (ec *executionContext) field_Mutation_createTodo_args(ctx context.Context, 
 	var err error
 	args := map[string]interface{}{}
 	var arg0 model.CreateTodoInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+	if tmp, ok := rawArgs["todo"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("todo"))
 		arg0, err = ec.unmarshalNCreateTodoInput2githubᚗcomᚋtomotakashimizuᚋtodoappᚑgraphqlᚑgoᚑreactᚋappᚋgraphᚋmodelᚐCreateTodoInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg0
+	args["todo"] = arg0
 	return args, nil
 }
 
@@ -344,14 +344,14 @@ func (ec *executionContext) field_Mutation_updateTodo_args(ctx context.Context, 
 	}
 	args["todoId"] = arg0
 	var arg1 model.UpdateTodoInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+	if tmp, ok := rawArgs["todo"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("todo"))
 		arg1, err = ec.unmarshalNUpdateTodoInput2githubᚗcomᚋtomotakashimizuᚋtodoappᚑgraphqlᚑgoᚑreactᚋappᚋgraphᚋmodelᚐUpdateTodoInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg1
+	args["todo"] = arg1
 	return args, nil
 }
 
@@ -422,7 +422,7 @@ func (ec *executionContext) _Mutation_createTodo(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().CreateTodo(rctx, fc.Args["input"].(model.CreateTodoInput))
+		return ec.resolvers.Mutation().CreateTodo(rctx, fc.Args["todo"].(model.CreateTodoInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -489,7 +489,7 @@ func (ec *executionContext) _Mutation_updateTodo(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().UpdateTodo(rctx, fc.Args["todoId"].(string), fc.Args["input"].(model.UpdateTodoInput))
+		return ec.resolvers.Mutation().UpdateTodo(rctx, fc.Args["todoId"].(string), fc.Args["todo"].(model.UpdateTodoInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
