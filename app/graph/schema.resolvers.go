@@ -50,6 +50,19 @@ func (r *mutationResolver) UpdateTodo(ctx context.Context, todoID string, todo m
 	return true, nil
 }
 
+// UpdateTodoStatus is the resolver for the updateTodoStatus field.
+func (r *mutationResolver) UpdateTodoStatus(ctx context.Context, todoID string, done bool) (bool, error) {
+	todoMeta := &infrastructure.Todo{
+		Done: done,
+	}
+	_, err := r.DB.ID(todoID).Cols("done").Update(todoMeta)
+	if err != nil {
+		log.Printf("Error update todo status: %v\n", err)
+		return false, err
+	}
+	return true, nil
+}
+
 // DeleteTodo is the resolver for the deleteTodo field.
 func (r *mutationResolver) DeleteTodo(ctx context.Context, todoID string) (bool, error) {
 	_, err := r.DB.ID(todoID).Delete(&infrastructure.Todo{})
