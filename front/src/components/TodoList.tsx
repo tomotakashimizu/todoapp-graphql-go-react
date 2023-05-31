@@ -1,10 +1,20 @@
 import React from 'react';
-import { DeleteTodoDocument, useGetAllTodosQuery } from '../types/gen/api';
+import { DeleteTodoDocument, useGetAllTodosQuery, UpdateTodoStatusDocument } from '../types/gen/api';
 import { useMutation } from '@apollo/client';
 
 export const TodoList: React.FC = () => {
   const { data, loading, error, refetch } = useGetAllTodosQuery();
+  const [updateTodoStatus] = useMutation(UpdateTodoStatusDocument);
   const [deleteTodo] = useMutation(DeleteTodoDocument);
+
+  const handleUpdateTodoStatus = async (todoId: string, done: boolean) => {
+    try {
+      await updateTodoStatus({ variables: { todoId, done } });
+      refetch();
+    } catch (error) {
+      console.error('Error updating todo status: ', error);
+    }
+  };
 
   const handleDeleteTodo = async (todoId: string) => {
     try {
@@ -28,6 +38,7 @@ export const TodoList: React.FC = () => {
             todo.done || (
               <li key={todo.id}>
                 {todo.text}
+                <button onClick={() => handleUpdateTodoStatus(todo.id, true)}>完了</button>
                 <button onClick={() => handleDeleteTodo(todo.id)}>削除</button>
               </li>
             )
@@ -41,6 +52,7 @@ export const TodoList: React.FC = () => {
             todo.done && (
               <li key={todo.id}>
                 {todo.text}
+                <button onClick={() => handleUpdateTodoStatus(todo.id, false)}>未完了に戻す</button>
                 <button onClick={() => handleDeleteTodo(todo.id)}>削除</button>
               </li>
             )
