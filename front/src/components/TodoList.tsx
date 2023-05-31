@@ -21,13 +21,30 @@ export const TodoList: React.FC = () => {
   return (
     <div>
       <h2>Todoリスト</h2>
+      <h3>未完了のTODO</h3>
       <ul>
-        {data?.todos.map((todo) => (
-          <li key={todo.id}>
-            {todo.text}
-            <button onClick={() => handleDeleteTodo(todo.id)}>削除</button>
-          </li>
-        ))}
+        {data?.todos.map(
+          (todo) =>
+            todo.done || (
+              <li key={todo.id}>
+                {todo.text}
+                <button onClick={() => handleDeleteTodo(todo.id)}>削除</button>
+              </li>
+            )
+        )}
+      </ul>
+
+      <h3>完了したTODO</h3>
+      <ul>
+        {data?.todos.map(
+          (todo) =>
+            todo.done && (
+              <li key={todo.id}>
+                {todo.text}
+                <button onClick={() => handleDeleteTodo(todo.id)}>削除</button>
+              </li>
+            )
+        )}
       </ul>
     </div>
   );
