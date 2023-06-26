@@ -1,4 +1,4 @@
-CREATE TABLE todos (
+CREATE TABLE IF NOT EXISTS todos (
     id UUID PRIMARY KEY,
     text TEXT NOT NULL,
     done BOOLEAN NOT NULL,

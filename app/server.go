@@ -16,7 +16,7 @@ import (
 const defaultPort = "8080"
 
 func main() {
-	connectionString := "user=test_user password=testtest dbname=test_db host=localhost port=5432 sslmode=disable"
+	connectionString := "user=postgres password=postgres dbname=testdb host=db port=5432 sslmode=disable"
 	engine, err := xorm.NewEngine("postgres", connectionString)
 	if err != nil {
 		log.Fatalln("error - create engine: ", err)
