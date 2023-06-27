@@ -16,7 +16,7 @@ import (
 const defaultPort = "8080"
 
 func main() {
-	connectionString := "user=test_user password=testtest dbname=test_db host=localhost port=5432 sslmode=disable"
+	connectionString := "user=postgres password=postgres dbname=testdb host=db port=5432 sslmode=disable"
 	engine, err := xorm.NewEngine("postgres", connectionString)
 	if err != nil {
 		log.Fatalln("error - create engine: ", err)
@@ -47,6 +47,7 @@ func main() {
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
 
+	// Docker環境のportとローカル環境のportが違うため、実際にローカル環境から接続するportは異なり8081である
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	log.Fatal(http.ListenAndServe(":"+port, handler))
 }
