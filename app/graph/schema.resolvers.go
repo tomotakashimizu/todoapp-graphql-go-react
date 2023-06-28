@@ -14,7 +14,7 @@ import (
 )
 
 // CreateTodo is the resolver for the createTodo field.
-func (r *mutationResolver) CreateTodo(ctx context.Context, todo model.CreateTodoInput) (*model.Todo, error) {
+func (r *mutationResolver) CreateTodo(ctx context.Context, todoInput model.CreateTodoInput) (*model.Todo, error) {
 	newUUID, err := uuid.NewRandom()
 	if err != nil {
 		log.Printf("Error generating UUID: %v\n", err)
@@ -22,7 +22,7 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, todo model.CreateTodo
 	}
 	todoMeta := &infrastructure.Todo{
 		ID:   newUUID.String(),
-		Text: todo.Text,
+		Text: todoInput.Text,
 		// TODO: ログインしているユーザのIDにする
 		UserID: "550e8400-e29b-41d4-a716-446655440000",
 	}
@@ -37,10 +37,10 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, todo model.CreateTodo
 }
 
 // UpdateTodo is the resolver for the updateTodo field.
-func (r *mutationResolver) UpdateTodo(ctx context.Context, todoID string, todo model.UpdateTodoInput) (bool, error) {
+func (r *mutationResolver) UpdateTodo(ctx context.Context, todoID string, todoInput model.UpdateTodoInput) (bool, error) {
 	todoMeta := &infrastructure.Todo{
-		Text: todo.Text,
-		Done: todo.Done,
+		Text: todoInput.Text,
+		Done: todoInput.Done,
 	}
 	_, err := r.DB.ID(todoID).Cols("text", "done").Update(todoMeta)
 	if err != nil {
