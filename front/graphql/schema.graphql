@@ -3,9 +3,9 @@ input CreateTodoInput {
 }
 
 type Mutation {
-  createTodo(todo: CreateTodoInput!): Todo!
+  createTodo(todoInput: CreateTodoInput!): Todo!
   deleteTodo(todoId: ID!): Boolean!
-  updateTodo(todo: UpdateTodoInput!, todoId: ID!): Boolean!
+  updateTodo(todoId: ID!, todoInput: UpdateTodoInput!): Boolean!
   updateTodoStatus(done: Boolean!, todoId: ID!): Boolean!
 }
 
