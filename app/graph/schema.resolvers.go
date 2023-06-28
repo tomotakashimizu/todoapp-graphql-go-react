@@ -20,29 +20,29 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, todoInput model.Creat
 		log.Printf("Error generating UUID: %v\n", err)
 		return nil, err
 	}
-	todoMeta := &infrastructure.Todo{
+	todo := &infrastructure.Todo{
 		ID:   newUUID.String(),
 		Text: todoInput.Text,
 		// TODO: ログインしているユーザのIDにする
 		UserID: "550e8400-e29b-41d4-a716-446655440000",
 	}
 
-	_, err = r.DB.Insert(todoMeta)
+	_, err = r.DB.Insert(todo)
 	if err != nil {
 		log.Printf("Error insert todo: %v\n", err)
 		return nil, err
 	}
 
-	return model.NewTodo(todoMeta), nil
+	return model.NewTodo(todo), nil
 }
 
 // UpdateTodo is the resolver for the updateTodo field.
 func (r *mutationResolver) UpdateTodo(ctx context.Context, todoID string, todoInput model.UpdateTodoInput) (bool, error) {
-	todoMeta := &infrastructure.Todo{
+	todo := &infrastructure.Todo{
 		Text: todoInput.Text,
 		Done: todoInput.Done,
 	}
-	_, err := r.DB.ID(todoID).Cols("text", "done").Update(todoMeta)
+	_, err := r.DB.ID(todoID).Cols("text", "done").Update(todo)
 	if err != nil {
 		log.Printf("Error update todo: %v\n", err)
 		return false, err
@@ -52,10 +52,10 @@ func (r *mutationResolver) UpdateTodo(ctx context.Context, todoID string, todoIn
 
 // UpdateTodoStatus is the resolver for the updateTodoStatus field.
 func (r *mutationResolver) UpdateTodoStatus(ctx context.Context, todoID string, done bool) (bool, error) {
-	todoMeta := &infrastructure.Todo{
+	todo := &infrastructure.Todo{
 		Done: done,
 	}
-	_, err := r.DB.ID(todoID).Cols("done").Update(todoMeta)
+	_, err := r.DB.ID(todoID).Cols("done").Update(todo)
 	if err != nil {
 		log.Printf("Error update todo status: %v\n", err)
 		return false, err
