@@ -24,8 +24,8 @@ function CreateTodoForm() {
     if (!text.trim()) return;
 
     try {
-      const todo = { text };
-      await createTodo({ variables: { todo } });
+      const todoInput = { text };
+      await createTodo({ variables: { todoInput } });
 
       setText('');
     } catch (error) {
