@@ -1,0 +1,50 @@
+.
+├── app
+│   ├── Dockerfile
+│   ├── go.mod
+│   ├── go.sum
+│   ├── gqlgen.yml
+│   ├── graph
+│   │   ├── generated.go
+│   │   ├── model
+│   │   │   ├── models_gen.go
+│   │   │   └── todo.go
+│   │   ├── resolver.go
+│   │   └── schema.resolvers.go
+│   ├── infrastructure
+│   │   └── todo.go
+│   ├── server.go
+│   ├── sql
+│   │   └── init.sql
+│   └── tools.go
+├── front
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── codegen.yml
+│   ├── graphql
+│   │   ├── mutation
+│   │   │   ├── createTodo.graphql
+│   │   │   ├── deleteTodo.graphql
+│   │   │   └── updateTodoStatus.graphql
+│   │   ├── query
+│   │   │   └── getAllTodos.graphql
+│   │   └── schema.graphql
+│   ├── node_modules
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   ├── src
+│   │   ├── App.tsx
+│   │   ├── components
+│   │   │   ├── CreateTodoForm.tsx
+│   │   │   └── TodoList.tsx
+│   │   ├── index.tsx
+│   │   └── types
+│   │       └── gen
+│   │           ├── api.ts
+│   │           └── possibleTypes-result.ts
+│   └── tsconfig.json
+├── docker-compose.yml
+└── schema.graphqls
+
+15 directories, 45 files
